@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🛍️ ShopDrive — Вход</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 440px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid #ffe0f0;
+            text-align: center;
+        }
+        .logo {
+            font-size: 3.5rem;
+            color: #e83f6f;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #e83f6f;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        p.subtitle {
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-large {
+            padding: 18px;
+            font-size: 1.3rem;
+        }
+        .btn-login {
+            background: #28a745;
+            color: white;
+        }
+        .btn-login:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        .btn-register {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-register:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        .divider {
+            margin: 30px 0;
+            border-top: 1px dashed #ddd;
+            color: #888;
+            font-size: 0.9rem;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+    <div class="container">
+
+        <div class="logo">🛍️</div>
+        <h1>ShopDrive</h1>
+        <p class="subtitle">Честные отзывы и скидки от настоящих шопоголиков</p>
+
+        <!-- Кнопка Войти -->
+        <a href="chat.html" class="btn btn-login btn-large">
+            Войти
+        </a>
+
+        <!-- Кнопка Зарегистрироваться -->
+        <a href="register.html" class="btn btn-register">
+            Зарегистрироваться
+        </a>
+
+        <div class="divider">или продолжить как гость</div>
+
+        <a href="info.html" style="color: #6c757d; text-decoration: none; font-size: 0.9rem;">
+            ℹ️ О проекте и реклама
+        </a>
+
+    </div>
+
+</body>
+</html>

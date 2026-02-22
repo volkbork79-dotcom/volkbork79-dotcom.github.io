@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация — ShopDrive</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+            padding: 40px 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #e83f6f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #d0305a;
+        }
+        .link {
+            text-align: center;
+            margin-top: 15px;
+            color: #e83f6f;
+            text-decoration: none;
+            display: block;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Сообщение о успехе (скрыто по умолчанию) -->
+    <div id="successMessage" class="success-message" style="display: none;">
+        ✅ Регистрация прошла успешно! Через 3 секунды вы будете перенаправлены...
+    </div>
+
+    <!-- Форма регистрации -->
+    <form id="registerForm" action="#" method="POST">
+        <h2>🔐 Регистрация</h2>
+
+        <div class="form-group">
+            <input type="text" id="name" placeholder="Ваше имя" required>
+        </div>
+
+        <div class="form-group">
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" id="password" placeholder="Пароль" required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" id="confirmPassword" placeholder="Повторите пароль" required>
+        </div>
+
+        <button type="submit" class="btn">Зарегистрироваться</button>
+    </form>
+
+    <p style="text-align:center; margin-top:20px;">
+        <a href="index.html" class="link">← Вернуться на главную</a>
+    </p>
+
+    <!-- Скрипт для проверки и редиректа -->
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Не отправлять форму на сервер
+
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Пароли не совпадают!");
+                return;
+            }
+
+            // Показываем сообщение об успехе
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("registerForm").style.display = "none";
+
+            // Через 3 секунды — переходим на главную
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 3000);
+        });
+    </script>
+
+</body>
+</html>

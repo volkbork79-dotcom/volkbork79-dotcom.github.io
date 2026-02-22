@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ℹ️ О проекте — ShopDrive</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #212529;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            color: #e83f6f;
+            font-size: 2.2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #ffe0f0;
+        }
+        h2 {
+            color: #e83f6f;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        p {
+            line-height: 1.7;
+            color: #444;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 28px;
+            background: #e83f6f;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .btn:hover {
+            background: #d0305a;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .highlight {
+            background: #fff8f8;
+            border-left: 4px solid #e83f6f;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #d0305a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+    <div class="content">
+
+        <header>
+            <h1>🛍️ ShopDrive</h1>
+            <p>Сообщество активных шопоголиков</p>
+        </header>
+
+        <div class="card">
+            <h2>📌 О проекте</h2>
+            <p>
+                ShopDrive — это честный чат о покупках на маркетплейсах. Мы делимся находками, скидками и реальными отзывами.
+            </p>
+            <p>
+                Никакой рекламы от брендов. Только живые люди, которые любят шопинг так же, как и вы.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📢 Реклама</h2>
+            <p>
+                Хотите разместить рекламу своего бренда или магазина? У нас более <strong>10 000 просмотров в месяц</strong>.
+            </p>
+            <p>
+                Пишите: <strong>ads@shopdrive.ru</strong><br>
+                Тема: "Реклама в ShopDrive"
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>🤝 Партнёрская программа</h2>
+            <p>
+                Подключайтесь к нашей партнёрке. За каждую продажу через вашу реферальную ссылку — до <strong>15% комиссии</strong>.
+            </p>
+            <a href="register.html" class="btn">Присоединиться</a>
+        </div>
+
+        <div class="card highlight">
+            <p>
+                ❤️ Этот проект создан сообществом. Вы можете поддержать развитие: <strong>donate@shopdrive.ru</strong> (Кошелёк)
+            </p>
+        </div>
+
+        <footer>
+            &copy; 2025 ShopDrive — Все права защищены<br>
+            Сделано с любовью для настоящих шопоголиков
+        </footer>
+
+    </div>
+
+</body>
+</html>

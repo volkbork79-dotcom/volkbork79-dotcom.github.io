@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🛍️ Маркетплейсы — ShopDrive</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px 20px;
+            background: #1f1f1f;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #e83f6f;
+            margin: 0;
+        }
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @media (min-width: 600px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .market-card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .market-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        .market-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            text-align: center;
+        }
+        .market-logo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background: #2c2c2c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        .market-name {
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e83f6f;
+            border-top: 1px solid #333;
+        }
+        .market-desc {
+            padding: 0 16px 16px;
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .wb { background: linear-gradient(135deg, #ff5e62, #ff9966); }
+        .ozon { background: linear-gradient(135deg, #0052cc, #00a0dc); }
+        .ali { background: linear-gradient(135deg, #ff6a33, #ff9900); }
+        .yandex { background: linear-gradient(135deg, #00a0de, #00c010); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="profile.html" class="back-btn">← Назад</a>
+        <h1>Маркетплейсы</h1>
+    </div>
+
+    <div class="container">
+        <!-- Wildberries -->
+        <div class="market-card">
+            <a href="https://www.wildberries.ru" target="_blank" class="market-link">
+                <div class="market-logo wb">🛍️</div>
+                <div class="market-name">Wildberries</div>
+                <div class="market-desc">Большой выбор одежды, обуви и электроники. Регулярные скидки до 90%</div>
+            </a>
+        </div>
+
+        <!-- Ozon -->
+        <div class="market-card">
+            <a href="https://www.ozon.ru" target="_blank" class="market-link">
+                <div class="market-logo ozon">📦</div>
+                <div class="market-name">Ozon</div>
+                <div class="market-desc">Доставка за 1 день, подписка Ozon Premium, много отзывов</div>
+            </a>
+        </div>
+
+        <!-- AliExpress -->
+        <div class="market-card">
+            <a href="https://www.aliexpress.com" target="_blank" class="market-link">
+                <div class="market-logo ali">🌍</div>
+                <div class="market-name">AliExpress</div>
+                <div class="market-desc">Товары напрямую из Китая. Дешёвые цены и бесплатная доставка</div>
+            </a>
+        </div>
+
+        <!-- Яндекс Маркет -->
+        <div class="market-card">
+            <a href="https://market.yandex.ru" target="_blank" class="market-link">
+                <div class="market-logo yandex">🔍</div>
+                <div class="market-name">Яндекс Маркет</div>
+                <div class="market-desc">Сравнение цен, удобный поиск, быстрая доставка</div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

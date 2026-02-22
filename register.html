@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📝 Вход / Регистрация — ShopDrive</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .card {
+            background: #1e1e1e;
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #e83f6f;
+            font-size: 1.6rem;
+        }
+        p {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #2c2c2c;
+            color: white;
+            font-size: 1rem;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #e83f6f;
+            box-shadow: 0 0 0 2px rgba(232, 63, 111, 0.25);
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #e83f6f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #d0305a;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .back-link:hover {
+            color: #e83f6f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Вход или регистрация</h1>
+        <p>Делитесь покупками с другими шопоголиками</p>
+
+        <form id="authForm">
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" id="name" placeholder="Например: Анна" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="ваш@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="Минимум 6 символов" required>
+            </div>
+
+            <div class="form-group">
+                <label for="avatar">Аватарка (необязательно)</label>
+                <input type="file" id="avatar" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn">Войти / Зарегистрироваться</button>
+        </form>
+
+        <a href="index.html" class="back-link">← На главную</a>
+    </div>
+
+    <!-- Подключаем Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://ipgnloapdoamwylhckbn.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwZ25sb2FwZG9hbXd5bGhja2JuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MzIzNTEsImV4cCI6MjA4NzMwODM1MX0.-xY6th1M1tBfB2eyFaPSxWcqb8yRxpXkB-riOfoC2-c';
+
+        // Создаём клиент
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById("authForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const file = document.getElementById("avatar").files[0];
+
+            if (password.length < 6) {
+                alert("Пароль должен быть не менее 6 символов");
+                return;
+            }
+
+            // Сохраняем имя
+            localStorage.setItem('userName', name);
+
+            // Обработка аватарки
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    localStorage.setItem('userAvatar', e.target.result);
+                    await trySignInOrUp(email, password);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                localStorage.setItem('userAvatar', 'https://via.placeholder.com/40x40/f8d7da/ffffff?text=👤');
+                await trySignInOrUp(email, password);
+            }
+        });
+
+        // Функция: попробовать войти, если не получится — зарегистрировать
+        async function trySignInOrUp(email, password) {
+            try {
+                // Сначала пробуем войти
+                const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+                if (signInData) {
+                    console.log("✅ Успешный вход", signInData);
+                    alert("Добро пожаловать обратно!");
+                    localStorage.setItem('isGuest', 'false');
+                    window.location.href = "profile.html";
+                    return;
+                }
+
+                // Если ошибка входа — пробуем зарегистрироваться
+                if (signInError && signInError.message.includes("Invalid login credentials")) {
+                    const { data: signUpData, error: signUpError } = await supabaseClient.auth.signUp({ email, password });
+
+                    if (signUpError) {
+                        if (signUpError.message.includes("rate limit")) {
+                            alert("Слишком много попыток. Используйте другой email, например: test+1@gmail.com");
+                        } else {
+                            alert("Ошибка регистрации: " + signUpError.message);
+                        }
+                        return;
+                    }
+
+                    alert("✅ Регистрация прошла успешно!");
+                    localStorage.setItem('isGuest', 'false');
+                    window.location.href = "profile.html";
+                } else {
+                    alert("Ошибка входа: " + signInError.message);
+                }
+            } catch (err) {
+                console.error("Критическая ошибка:", err);
+                alert("Произошла ошибка: " + err.message);
+            }
+        }
+    </script>
+</body>
+</html>

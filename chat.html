@@ -176,8 +176,6 @@
         // === Настройки Supabase ===
         const supabaseUrl = 'https://ipgnloapdoamwylhckbn.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwZ25sb2FwZG9hbXd5bGhja2JuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MzIzNTEsImV4cCI6MjA4NzMwODM1MX0.-xY6th1M1tBfB2eyFaPSxWcqb8yRxpXkB-riOfoC2-c';
-
-        // Создаём клиент
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // === Элементы ===
@@ -189,9 +187,30 @@
         const previewImg = document.getElementById("previewImg");
 
         let photoFile = null;
-        // Берём имя из localStorage или гость
-        let userName = localStorage.getItem('userName') || prompt("Введите имя для чата:", "Аноним");
+
+        // 🔐 Принудительный вход (замените email и пароль!)
+        const TEST_EMAIL = "test+1@gmail.com";  // ← замените на свой тестовый email
+        const TEST_PASSWORD = "123456";
+
+        // Имя пользователя из email или prompt
+        let userName = localStorage.getItem('userName') || TEST_EMAIL.split('@')[0];
         const userAvatar = localStorage.getItem('userAvatar') || 'https://via.placeholder.com/40x40/f8d7da/ffffff?text=👤';
+
+        // === Вход при загрузке чата ===
+        async function signInAutomatically() {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: TEST_EMAIL,
+                password: TEST_PASSWORD
+            });
+
+            if (error) {
+                console.error("❌ Ошибка входа:", error.message);
+                alert("Не удалось войти: " + error.message);
+            } else {
+                console.log("✅ Успешный вход как:", data.user.email);
+                loadMessages(); // Загружаем чат
+            }
+        }
 
         // === Предпросмотр фото ===
         photoInput.addEventListener("change", (e) => {
@@ -212,14 +231,33 @@
             const text = messageInput.value.trim();
             if (!text && !photoFile) return;
 
-            const photoUrl = photoFile ? URL.createObjectURL(photoFile) : null;
+            // Загружаем фото, если есть
+            let photoUrl = null;
+            if (photoFile) {
+                const fileExt = photoFile.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+                const filePath = `chat-photos/${fileName}`;
 
-            const { data, error } = await supabaseClient
+                const { error: uploadError } = await supabaseClient.storage
+                    .from('chat-photos')
+                    .upload(filePath, photoFile);
+
+                if (uploadError) {
+                    console.error("Ошибка загрузки фото:", uploadError);
+                    alert("Ошибка загрузки фото");
+                    return;
+                }
+
+                photoUrl = `https://ipgnloapdoamwylhckbn.supabase.co/storage/v1/object/public/chat-photos/${filePath}`;
+            }
+
+            // Отправляем сообщение
+            const { error } = await supabaseClient
                 .from('Rbork79')
                 .insert([{ user_name: userName, text, photo_url: photoUrl }]);
 
             if (error) {
-                console.error("Ошибка:", error);
+                console.error("Ошибка отправки:", error);
                 alert("Ошибка: " + error.message);
             } else {
                 addMessageToChat(userName, text, photoUrl);
@@ -239,7 +277,7 @@
             avatar.src = name === userName ? userAvatar : `https://via.placeholder.com/40x40/dbeafe/1e40af?text=${name.charAt(0)}`;
             avatar.className = "avatar";
 
-            const content = document.createElement("div");
+            const content = document.createElement("content");
             content.className = "content";
 
             const authorSpan = document.createElement("span");
@@ -296,8 +334,8 @@
             if (e.key === "Enter") sendMessage();
         });
 
-        // === Загружаем сообщения без проверки сессии ===
-        loadMessages();
+        // === Запуск ===
+        signInAutomatically();
     </script>
 </body>
 </html>
